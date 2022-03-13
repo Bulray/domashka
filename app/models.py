@@ -34,15 +34,7 @@ class User(db.Model):
 
 
 
-class Offer(db.Model):
-    __tablename__ = 'offers'
 
-    id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
-    executer_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-    executer = relationship('User')
-    Order = relationship('Order')
 
 
 class Order(db.Model):

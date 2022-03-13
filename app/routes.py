@@ -40,8 +40,8 @@ def get_offers():
     return jsonify([offer.serialize for offer in offers])
 
 
-@app.route('/offers<int:offer_id>', methods=['GET'])
-def get_offer(offer_id):
+@app.route('/offers<int:id>', methods=['GET'])
+def get_offer(id):
     offer = db.session.query(models.Offer).filter(models.Offer.id == offer_id).first()
     if offer is None:
         abort(404)
@@ -55,13 +55,6 @@ def create_user():
     db.session.commit()
     return {}
 
-
-@app.route('/users', methods=['POST'])
-def create_user():
-    data = request.json
-    db.session.add(models.User(**data))
-    db.session.commit()
-    return {}
 
 
 @app.route('/users/<int:user_id>', methods=['PUT'])
@@ -80,6 +73,50 @@ def edit_user(user_id):
 @app.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     result = db.session.query(models.User).filter(models.User.id == user_id).delete()
+    print(result)
+
+    db.session/commit()
+    return {}
+
+
+@app.route('/orders/<int:order_id>', methods=['PUT'])
+def edit_order(order_id):
+    data = request.json
+    order = db.session.query(models.Order).filter(models.Order.id == order_id).first()
+    if order is None:
+        abort(404)
+
+    db.session.query(models.Order).filter(models.Order.id == order_id).update(data)
+    db.session.commit()
+
+
+    return{}
+
+@app.route('/orders/<int:order_id>', methods=['DELETE'])
+def delete_order(order_id):
+    result = db.session.query(models.Order).filter(models.Order.id == order_id).delete()
+    print(result)
+
+    db.session/commit()
+    return {}
+
+
+@app.route('/offers/<int:id>', methods=['PUT'])
+def edit_offer(id):
+    data = request.json
+    offer = db.session.query(models.Offer).filter(models.Offer.id == Offer_id).first()
+    if offer is None:
+        abort(404)
+
+    db.session.query(models.Offer).filter(models.Offer.id == offer_id).update(data)
+    db.session.commit()
+
+
+    return{}
+
+@app.route('/offers/<int:id>', methods=['DELETE'])
+def delete_offer(id):
+    result = db.session.query(models.offer).filter(models.offer.id == offer_id).delete()
     print(result)
 
     db.session/commit()
